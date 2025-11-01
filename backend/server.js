@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from "./config/db.js";
 import userRouter from './routes/userRoutes.js';
-import quizRoutes from "./routes/quizRoutes.js"
+
 import cors from 'cors';
 
 dotenv.config();
@@ -20,7 +20,7 @@ app.get("/", (req,res)=>{
 });
 
 app.use('/api/users', userRouter);
-app.use('/api/quiz',quizRoutes);
+
 
 app.listen(port, ()=>{
     console.log(`server is running on ${port}`);
