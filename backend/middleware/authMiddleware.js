@@ -1,26 +1,39 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
-const protect = async (req, res, next) => {
-  let token;
 
-  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-    try {
-      token = req.headers.authorization.split(" ")[1];
+const JWT_SECRET = process.env.JWT_SECRET;
 
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+export default async function authMiddleware(req,res,next) {
+  const authHeader = req.headers.authorization;
 
-      req.user = await User.findById(decoded.id).select("-password");
+  if(!authHeader|| ! authHeader.startsWith('Bearer')){
+    return res.status(401).json({
+      success: false,
+      message: 'Not authorized, token missing'
+    })
+  }
 
-      next();
-    } catch (error) {
-      return res.status(401).json({ message: "Not authorized, token failed" });
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const payload = jwt.verify(token, JWT_SECRET);
+    const user = await User.findById(payload.id).select('password');
+
+    if(!user){
+      return res.status(401).json({
+        success: false,
+        message : 'User not found'
+      });
     }
-  }
 
-  if (!token) {
-    return res.status(401).json({ message: "Not authorized, no token" });
+    req.user = user;
+    next();
+  } catch (err) {
+    console.error('JWT verification failed',err);
+    return res.status(401).json({
+      success: false,
+      message: 'Token expired or invalid'
+    })
   }
-};
-
-export default protect;
+}
