@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import {Link, NavLink, useNavigate} from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { navbarStyles } from "../assets/dummyStyles";
-import { Award, LogOut, LogIn ,X, Menu} from 'lucide-react';
+import { Award, LogOut, LogIn, X, Menu, UserPlus } from 'lucide-react';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
-  const [menuOpen, setMenuOpen] =useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -26,21 +26,21 @@ const Navbar = () => {
     return () => window.removeEventListener("authChanged", handler);
   }, []);
 
-  const handleLogout = ()=>{
+  const handleLogout = () => {
     try {
       localStorage.removeItem('authToken');
       localStorage.clear();
     } catch (e) {
-      console.error("Logout error",e);
+      console.error("Logout error", e);
     }
     window.dispatchEvent(
-      new CustomEvent("authChanged", { detail: {user: null}})
+      new CustomEvent("authChanged", { detail: { user: null } })
     );
     setMenuOpen(false);
     try {
       navigate('/login');
     } catch (e) {
-      window.location.href ="/login";
+      window.location.href = "/login";
     }
   };
   return (
@@ -50,10 +50,10 @@ const Navbar = () => {
 
       <div className={navbarStyles.bubble1}></div>
       <div className={navbarStyles.bubble2}></div>
-      <div className={navbarStyles.bubble3}></div> 
+      <div className={navbarStyles.bubble3}></div>
       <div className={navbarStyles.container}>
         <div className={navbarStyles.logoContainer}>
-        <Link to="/" className={navbarStyles.logoButton}>
+          <Link to="/" className={navbarStyles.logoButton}>
             <div className={navbarStyles.logoInner}>
               <img
                 src={
@@ -73,68 +73,82 @@ const Navbar = () => {
         </div>
 
         <div className={navbarStyles.desktopButtonsContainer}>
-                <div className={navbarStyles.spacer}></div>
-                <NavLink to = '/result' className= {navbarStyles.resultsButton}>
-                <Award className={navbarStyles.buttonIcon}/>
-                My Result
-                </NavLink>
+          <div className={navbarStyles.spacer}></div>
+          <NavLink to='/result' className={navbarStyles.resultsButton}>
+            <Award className={navbarStyles.buttonIcon} />
+            My Result
+          </NavLink>
 
-                {loggedIn ? (
-                  <button
-                  onClick = {handleLogout} className={navbarStyles.logoButton}>
-                    <LogOut className={navbarStyles.buttonIcon}/>
-                    Logout
-                  </button>
-                ):
-                (
-                  <NavLink to="/login" className={navbarStyles.loginButton}>
-                    <LogIn className={navbarStyles.buttonIcon}/>
-                    Login
-                  </NavLink>
-                )}
-        </div>
-        <div className={navbarStyles.mobileMenuContainer}>
-          <button onClick={()=> setMenuOpen((s) => !s)}
-            className={navbarStyles.menuToggleButton}>
-              {menuOpen ? (
-                <X className = {navbarStyles.menuIcon}/>
-              ):(
-                <Menu className={navbarStyles.menuIcon}/>
-              )}
+          {loggedIn ? (
+            <button
+              onClick={handleLogout} className={navbarStyles.logoButton}>
+              <LogOut className={navbarStyles.buttonIcon} />
+              Logout
             </button>
-
-            {menuOpen && (
-              <div className={navbarStyles.mobileMenuPanel}>
-                <ul className={navbarStyles.mobileMenuList}>
-                  <li>
-                    <NavLink to="/result" className={navbarStyles.mobileMenuItem} onClick={()=> setMenuOpen(false)}>
-                    <Award className={navbarStyles.mobileMenuIcon}/>
-                    My Result
-                    </NavLink>
-                  </li>
-
-                  {loggedIn ? (
-                    <li>
-                      <button type='button' onClick={handleLogout} className={navbarStyles.mobileMenuItem}>
-                        <LogOut className={navbarStyles.mobileMenuIcon}/>
-                        Logout
-                      </button>
-                    </li>
-                  ):(
-                    <li>
-                      <NavLink to="/login" className={navbarStyles.mobileMenuItem} onClick={()=> setMenuOpen(false)}>
-                      <LogIn className={navbarStyles.mobileMenuIcon}/>
-                      Login
-                      </NavLink>
-                    </li>
-                  )}
-                </ul>
-              </div>
+          ) :
+            (
+              <>
+                <NavLink to="/signup" className={navbarStyles.loginButton}>
+                  <UserPlus className={navbarStyles.buttonIcon} />
+                  Sign Up
+                </NavLink>
+                <NavLink to="/login" className={navbarStyles.loginButton}>
+                  <LogIn className={navbarStyles.buttonIcon} />
+                  Login
+                </NavLink>
+              </>
             )}
         </div>
+        <div className={navbarStyles.mobileMenuContainer}>
+          <button onClick={() => setMenuOpen((s) => !s)}
+            className={navbarStyles.menuToggleButton}>
+            {menuOpen ? (
+              <X className={navbarStyles.menuIcon} />
+            ) : (
+              <Menu className={navbarStyles.menuIcon} />
+            )}
+          </button>
+
+          {menuOpen && (
+            <div className={navbarStyles.mobileMenuPanel}>
+              <ul className={navbarStyles.mobileMenuList}>
+                <li>
+                  <NavLink to="/result" className={navbarStyles.mobileMenuItem} onClick={() => setMenuOpen(false)}>
+                    <Award className={navbarStyles.mobileMenuIcon} />
+                    My Result
+                  </NavLink>
+                </li>
+
+                {loggedIn ? (
+                  <li>
+                    <button type='button' onClick={handleLogout} className={navbarStyles.mobileMenuItem}>
+                      <LogOut className={navbarStyles.mobileMenuIcon} />
+                      Logout
+                    </button>
+                  </li>
+                ) : (
+                  <>
+                  <li>
+                            <NavLink to="/signup" className={navbarStyles.mobileMenuItem} onClick={()=> setMenuOpen(false)}>
+                                <UserPlus className={navbarStyles.mobileMenuIcon}/>
+                                Sign Up
+                            </NavLink>
+                        </li>
+                  <li>
+                    <NavLink to="/login" className={navbarStyles.mobileMenuItem} onClick={() => setMenuOpen(false)}>
+                      <LogIn className={navbarStyles.mobileMenuIcon} />
+                      Login
+                    </NavLink>
+                  </li>
+                  </>
+                )}
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
-        <style>{navbarStyles.animations}</style>
-        </nav>
+      <style>{navbarStyles.animations}</style>
+    </nav>
   );
 };
 
