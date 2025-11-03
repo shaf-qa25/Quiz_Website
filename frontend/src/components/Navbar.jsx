@@ -57,7 +57,7 @@ const Navbar = () => {
             <div className={navbarStyles.logoInner}>
               <img
                 src={
-                  "https://yt3.googleusercontent.com/eD5QJD-9uS--ekQcA-kDTCu1ZO4d7d7BTKLIVH-EySZtDVw3JZcc-bHHDOMvxys92F7rD8Kgfg=s900-c-k-c0x00ffffff-no-rj"
+                  "https://images.unsplash.com/photo-1666458949289-563618017a86?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=464"
                 }
                 alt="QuizMaster logo"
                 className={navbarStyles.logoImage}
