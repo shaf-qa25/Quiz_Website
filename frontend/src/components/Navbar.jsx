@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import { navbarStyles } from "../assets/dummyStyles";
-import { Award, LogOut, LogIn } from 'lucide-react';
+import { Award, LogOut, LogIn ,X, Menu} from 'lucide-react';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -76,9 +76,49 @@ const Navbar = () => {
                   </NavLink>
                 )}
         </div>
+        <div className={navbarStyles.mobileMenuContainer}>
+          <button onClick={()=> setMenuOpen((s) => !s)}
+            className={navbarStyles.menuToggleButton}>
+              {menuOpen ? (
+                <X className = {navbarStyles.menuIcon}/>
+              ):(
+                <Menu className={navbarStyles.menuIcon}/>
+              )}
+            </button>
+
+            {menuOpen && (
+              <div className={navbarStyles.mobileMenuPanel}>
+                <ul className={navbarStyles.mobileMenuList}>
+                  <li>
+                    <NavLink to="/result" className={navbarStyles.mobileMenuItem} onClick={()=> setMenuOpen(false)}>
+                    <Award className={navbarStyles.mobileMenuIcon}/>
+                    My Result
+                    </NavLink>
+                  </li>
+
+                  {loggedIn ? (
+                    <li>
+                      <button type='button' onClick={handleLogout} className={navbarStyles.mobileMenuItem}>
+                        <LogOut className={navbarStyles.mobileMenuIcon}/>
+                        Logout
+                      </button>
+                    </li>
+                  ):(
+                    <li>
+                      <NavLink to="/login" className={navbarStyles.mobileMenuItem} onClick={()=> setMenuOpen(false)}>
+                      <LogIn className={navbarStyles.mobileMenuIcon}/>
+                      Login
+                      </NavLink>
+                    </li>
+                  )}
+                </ul>
+              </div>
+            )}
+        </div>
       </div>
+        <style>{navbarStyles.animations}</style>
         </nav>
-  )
-}
+  );
+};
 
 export default Navbar
