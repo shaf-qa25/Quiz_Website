@@ -15,6 +15,60 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [submitError, setSubmitError] = useState("");
 
+    const API_BASE= "https://mindup-ni3d.onrender.com";
+
+    const handleSubmit = async (ev) => {
+    ev.preventDefault();
+    setSubmitError('');
+    const validation=validate();
+    setErrors(validation);
+    if(Object.keys(validation).length)return;
+    setLoading(true);
+
+    try {
+        const payload = {email: email.trim().toLowerCase(), password};
+        const resp = await fetch(`${API_BASE}/api/auth/login`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(payload),
+        });
+        let data = null;
+
+        try{
+            data= await resp.json();
+        } catch(e){
+            console.log("Error in Fetching data");
+        }
+        if(!resp.ok){
+            const msg = data?.message || 'Login Failed';
+            setSubmitError(msg);
+            return;
+        }
+
+        if(data?.token){
+            try {
+                localStorage.setItem('authToken', data.token);
+                localStorage.setItem('currentUser', JSON.stringify(data.user || {email: payload.email}))
+            } catch (err) {
+                console.log("Token not received");
+                
+            }
+        }
+
+        const user = data.user || {email: payload.email};
+        window.dispatchEvent(
+            new CustomEvent("authChanged", {detail:{user}})
+        );
+        if(typeof onLoginSuccess === "function") onLoginSuccess(user);
+        navigate('/',{replace: true});
+    } catch (error) {console.error("Login Error", error);
+        setSubmitError('Network Error');
+    }
+    finally{
+        setLoading(false);
+    }
+        };
+
     const validate = () => {
         const e = {};
         if (!email) e.email = "Email is required";
@@ -35,7 +89,7 @@ const Login = () => {
         </Link>
 
         <div className={loginStyles.formContainer}>
-            <form  className={loginStyles.form} noValidate>
+            <form onSubmit={handleSubmit} className={loginStyles.form} noValidate>
                 <div className={loginStyles.formWrapper}>
                     <div className={loginStyles.animatedBorder}>
                         <div className={loginStyles.formContent}>
@@ -80,7 +134,7 @@ const Login = () => {
                                         <Lock className={loginStyles.inputIconInner}/>
                                     </span>
                                     <input type={showPassword ? 'text' : 'password'} name="password"  value={password}  onChange={(e)=>{
-                                        setEmail(e.target.value);
+                                        setPassword(e.target.value);
                                         if(errors.password){
                                             setErrors((s)=>({
                                                 ...s ,password: undefined,}));
@@ -123,9 +177,9 @@ const Login = () => {
                                         "Signing in..."
                                     ):(
                                       <>
-                                      <logIn className={loginStyles.submitButtonIcon}/>
+                                      <LogIn className={loginStyles.submitButtonIcon}/>
                                       <span className={loginStyles.submitButtonText}>
-                                        Sign In
+                                        Log In
                                       </span>
                                       </>  
                                     )}
@@ -147,6 +201,8 @@ const Login = () => {
                 </div>
             </form>
         </div>
+
+        <style>{loginStyles.animations}</style>
     </div>
   )
 }

@@ -54,7 +54,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
     {expiresIn : TOKEN_EXPIRES_IN}
   );
   return res.status(200).json({
-    success: false,
+    success: true,
     message: 'Account created successfully',
     token,
     user : {
