@@ -3,14 +3,14 @@ import Result from "../models/resultModel.js";
 export async function createResult(req,res) {
     try {
         if(!req.user || !req.user.id){
-            return res.staus(401).json({
+            return res.status(401).json({
                 success: false,
                 message : 'Not authorized'
             })
         }
 
         const { title, technology, level, totalQuestions, correct, wrong } = req.body;
-        if(!technology||!level||totalQuestions===undefined|| correct ==== undefined`){
+        if(!technology||!level||totalQuestions===undefined|| correct === undefined){
             return res.status(400).json({
                 success: false,
                 message: 'Missing fields'
@@ -33,6 +33,7 @@ export async function createResult(req,res) {
             totalQuestions: Number(totalQuestions),
             correct: Number(correct),
             wrong: computedWrong,
+            percent,
             user: req.user.id
           };
 
@@ -56,7 +57,7 @@ export async function createResult(req,res) {
 export async function listResults(req,res) {
     try {
         if(!req.user || !req.user.id){
-            return res.staus(401).json({
+            return res.status(401).json({
                 success: false,
                 message : 'Not authorized'
             })
@@ -68,9 +69,13 @@ export async function listResults(req,res) {
 
         }
         const items = await Result.find(query).sort({createdAt : -1}).lean();
+        const resultsWithPercent = items.map(item => ({
+            ...item,
+            percent: item.totalQuestions > 0 ? Math.round((item.correct / item.totalQuestions) * 100) : 0,
+        }));
         return res.json({
             success: true,
-            results: items
+            results: resultsWithPercent,
         })
     } catch (err) {
         console.error('List result error', err);
