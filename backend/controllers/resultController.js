@@ -67,7 +67,7 @@ export async function listResults(req,res) {
             query.technology = technology;
 
         }
-        const items = (await Result.find(query)).toSorted({createdAt : -1}).lean();
+        const items = await Result.find(query).sort({createdAt : -1}).lean();
         return res.json({
             success: true,
             results: items
