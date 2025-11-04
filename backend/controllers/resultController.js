@@ -10,7 +10,7 @@ export async function createResult(req,res) {
         }
 
         const { title, technology, level, totalQuestions, correct, wrong } = req.body;
-        if(!technology||!level||totalQuestions===undefined|| corr` ==== undefined`){
+        if(!technology||!level||totalQuestions===undefined|| correct ==== undefined`){
             return res.status(400).json({
                 success: false,
                 message: 'Missing fields'
