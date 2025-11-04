@@ -33,7 +33,6 @@ export async function createResult(req,res) {
             totalQuestions: Number(totalQuestions),
             correct: Number(correct),
             wrong: computedWrong,
-            percent,
             user: req.user.id
           };
 
@@ -69,13 +68,9 @@ export async function listResults(req,res) {
 
         }
         const items = await Result.find(query).sort({createdAt : -1}).lean();
-        const resultsWithPercent = items.map(item => ({
-            ...item,
-            percent: item.totalQuestions > 0 ? Math.round((item.correct / item.totalQuestions) * 100) : 0,
-        }));
         return res.json({
             success: true,
-            results: resultsWithPercent,
+            results: items
         })
     } catch (err) {
         console.error('List result error', err);
