@@ -6,6 +6,7 @@ import { sidebarStyles } from '../assets/dummyStyles';
 import { Link } from 'react-router-dom';
 import { Target, Trophy, Layers, Code, Zap, Globe, Cpu, Coffee, ArrowRight } from 'lucide-react';
 import Navbar from '../components/Navbar';
+import TypewriterTitle from '../components/TypewriterTitle';
 
 const Home = () => {
     
@@ -30,9 +31,9 @@ const Home = () => {
                     <div className={sidebarStyles.welcomeIcon}>
                         <Trophy size={64} className="text-[#FF914D]" />
                     </div>
-                    <h2 className="text-4xl md:text-6xl font-extrabold text-[#2C2C2C] mb-4">
-                        **Master Coding Quizzes, One Level at a Time**
-                    </h2>
+                    <div className="mb-8"> 
+    <TypewriterTitle/>
+</div>
                     <p className="text-lg md:text-xl text-[#2C2C2C]/70 max-w-3xl mx-auto mb-8">
                         The ultimate platform to test, track, and significantly boost your knowledge in the world's most demanded technologies.
                     </p>

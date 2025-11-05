@@ -1,14 +1,11 @@
-// Sidebar.jsx (Modified)
+
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { BookOpen, ChevronDown, ChevronRight, X } from 'lucide-react';
 import { sidebarStyles } from '../assets/dummyStyles'
 
-// State/Props Interface (This is how we communicate between Sidebar and QuizContent)
-// We define the initial state, but the actual state is managed by the parent (PlayQuiz)
 const technologies = [
-    { id: "html", name: "HTML", icon: <BookOpen size={20} />, color: "bg-orange-50 text-orange-600 border-orange-200", }, // Assuming BookOpen for HTML/CSS placeholders
-    // ... rest of your technology objects
+    { id: "html", name: "HTML", icon: <BookOpen size={20} />, color: "bg-orange-50 text-orange-600 border-orange-200", }, 
     { id: "css", name: "CSS", icon: <BookOpen size={20} />, color: "bg-blue-50 text-blue-600 border-blue-200", },
     { id: "js", name: "JavaScript", icon: <BookOpen size={20} />, color: "bg-yellow-50 text-yellow-600 border-yellow-200", },
     { id: "react", name: "React", icon: <BookOpen size={20} />, color: "bg-cyan-50 text-cyan-600 border-cyan-200", },
@@ -31,7 +28,6 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, selectedTech, setSelectedTech, 
 
     const asideRef = useRef(null);
 
-    // Effect to prevent body scroll on mobile when sidebar is open
     useEffect(() => {
         const isMobile = window.innerWidth < 768;
         if (isMobile) {
@@ -53,12 +49,9 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, selectedTech, setSelectedTech, 
             setSelectedTech(techId);
             setSelectedLevel(null);
         }
-        resetQuiz(); // Reset quiz state in parent
-        
-        // Open sidebar on mobile when a technology is selected to show levels
+        resetQuiz(); 
         if (window.innerWidth < 768) toggleSidebar(); 
     
-        // Scroll to selected item logic
         setTimeout(() => {
             const el = asideRef.current?.querySelector(`[data-tech="${techId}"]`);
             if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -67,9 +60,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, selectedTech, setSelectedTech, 
 
     const handleLevelSelect = (levelId) => {
         setSelectedLevel(levelId);
-        resetQuiz(); // Reset quiz state in parent
-
-        // Close sidebar on mobile after level selection
+        resetQuiz(); 
         if (window.innerWidth < 768) toggleSidebar();
     };
 
@@ -85,16 +76,11 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, selectedTech, setSelectedTech, 
             )}
             <aside
                 ref={asideRef}
-                // Tailwind classes for responsiveness: 
-                // - Default: hidden (will be overriden by translate-x)
-                // - Mobile: uses state for slide in/out
-                // - Desktop (md): permanently visible (translate-x-0)
                 className={`${sidebarStyles.sidebar} 
                            ${isMobile ? (isSidebarOpen ? "translate-x-0 " : "-translate-x-full") : "translate-x-0"}
                            md:translate-x-0`}
             >
                 <div className={sidebarStyles.sidebarHeader}>
-                    {/* ... (Header content remains the same) ... */}
                     <div className={sidebarStyles.headerDecoration1}></div>
                     <div className={sidebarStyles.headerDecoration2}></div>
 
@@ -108,8 +94,6 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, selectedTech, setSelectedTech, 
                                 Test your knowledge and improve skills
                             </p>
                         </div>
-
-                        {/* This close button is only needed on mobile */}
                         {isMobile && (
                              <button onClick={toggleSidebar}
                                 className={sidebarStyles.closeButton}>
@@ -174,7 +158,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar, selectedTech, setSelectedTech, 
                 </div>
 
                 <div className={sidebarStyles.sidebarFooter}>
-                    {/* ... (Footer content remains the same) ... */}
+                    
                     <div className={sidebarStyles.footerContent}>
                         <div className={sidebarStyles.footerContentCenter}>
                             <p>Master your skills one quiz at a time</p>

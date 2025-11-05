@@ -258,7 +258,6 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
                     </div>
                 </div>
             ) : !selectedLevel ? (
-                // Level Selection Screen (Desktop view)
                 <div className={sidebarStyles.levelSelectionContainer}>
                     <div className={sidebarStyles.levelSelectionContent}>
                         <div
