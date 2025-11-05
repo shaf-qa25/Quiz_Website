@@ -5,6 +5,7 @@ import Login from "./components/Login.jsx"
 import Signup from "./components/Signup.jsx";
 import ResultPage from "./pages/resultPage.jsx";
 import PlayQuiz from "./pages/PlayQuiz.jsx";
+import Footer from "./pages/footer.jsx";
 
 
 function RequireAuth({children}){
@@ -19,7 +20,7 @@ function RequireAuth({children}){
 }
 function App() {
   return (
- 
+ <>
     <Routes>
       <Route path = "/" element= {<Home/>}/>
       <Route path="/login" element= {<Login/>}/>
@@ -30,8 +31,10 @@ function App() {
         </RequireAuth>
       }/>
       <Route path="/quiz" element={<PlayQuiz/>}/>
+
     </Routes>
-   
+    <Footer/>
+   </>
   );
 }
 
