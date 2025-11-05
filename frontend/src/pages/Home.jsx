@@ -1,8 +1,8 @@
 import React from 'react';
-import { sidebarStyles } from '../assets/dummyStyles';
+import { sidebarStyles } from '../assets/themeStyles';
 import { Link } from 'react-router-dom';
 import { Target, Trophy, Layers, Code, Zap, Globe, Cpu, Coffee, ArrowRight } from 'lucide-react';
-import Navbar from '../components/Navbar';
+
 import TypewriterTitle from '../components/TypewriterTitle';
 
 const Home = () => {
@@ -61,7 +61,7 @@ const Home = () => {
                 </div>
             </HomeSection>
 
-{/* 5. TECHNOLOGY SPOTLIGHT SECTION */}
+
 <HomeSection>
   <h3 className="text-3xl md:text-4xl font-bold text-center text-[#2C2C2C] mb-12">
     Technologies We Cover
@@ -104,7 +104,7 @@ const Home = () => {
           })}
         </div>
 
-        {/* Modal */}
+        
         {selectedTech && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
             <div className="bg-white rounded-2xl shadow-2xl w-[90%] md:w-[80%] lg:w-[60%] h-[60vh] p-6 relative">
@@ -138,7 +138,6 @@ const Home = () => {
     );
   })()}
 </HomeSection>
-            {/* 6. FINAL CTA (Footer-like) */}
             <div className={`text-center py-12 ${sidebarStyles.sidebarHeader}`}>
                 <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4">
                     Ready to prove your skills?

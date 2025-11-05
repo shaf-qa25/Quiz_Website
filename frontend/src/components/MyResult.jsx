@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { resultStyles } from '../assets/dummyStyles'
+import { resultStyles } from '../assets/themeStyles'
 
 import axios from "axios";
 import { toast } from "react-toastify";

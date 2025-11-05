@@ -1,8 +1,6 @@
-
-
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { BookOpen, ChevronDown, ChevronRight, X } from 'lucide-react';
-import { sidebarStyles } from '../assets/dummyStyles'
+import { sidebarStyles } from '../assets/themeStyles'
 
 const technologies = [
     { id: "html", name: "HTML", icon: <BookOpen size={20} />, color: "bg-orange-50 text-orange-600 border-orange-200", }, 

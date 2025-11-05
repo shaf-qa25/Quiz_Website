@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { navbarStyles } from "../assets/dummyStyles";
+import { navbarStyles } from "../assets/themeStyles";
 import { Award, LogOut, LogIn, X, Menu, UserPlus, TargetIcon } from 'lucide-react';
 
 const Navbar = () => {
@@ -46,7 +46,7 @@ const Navbar = () => {
   };
   const getNavLinkClassName = (isActive, baseStyle) => {
     return isActive 
-      ? `${baseStyle} ${navbarStyles.activeLinkStyle || 'font-bold text-indigo-600'}` // 'font-bold text-indigo-600' is a placeholder
+      ? `${baseStyle} ${navbarStyles.activeLinkStyle || 'font-bold text-indigo-600'}`
       : baseStyle;
   };
 

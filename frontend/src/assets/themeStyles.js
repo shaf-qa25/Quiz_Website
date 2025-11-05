@@ -260,15 +260,15 @@ export const sidebarStyles = {
   // Page container
   pageContainer: "min-h-screen bg-gradient-to-br from-[#FFF9F0] to-[#FFEAC2]",
 
-  // Mobile overlay (MODIFIED: Added md:hidden back)
+  // Mobile overlay 
   mobileOverlay: "fixed inset-0 bg-black/30 z-30 **md:hidden**",
 
   // Main container
   mainContainer: "flex xl:h-screen xl:overflow-y-hidden",
 
-  // Sidebar styles (MODIFIED: Added -translate-x-full to hide by default)
+  // Sidebar styles
   sidebar:
-    "fixed h-auto z-40 top-0 left-0 w-80 transform transition-transform duration-300 ease-in-out bg-white shadow-lg rounded-r-2xl overflow-y-auto border-r border-[#FFD93D]/30 **-translate-x-full md:relative md:translate-x-0** md:flex md:flex-col",
+  "fixed top-0 left-0 h-full w-80 z-40 transform transition-transform duration-300 ease-in-out bg-white shadow-lg rounded-r-2xl border-r border-[#FFD93D]/30 overflow-y-auto md:relative md:h-auto md:translate-x-0 md:flex md:flex-col",
 
   // Sidebar header
   sidebarHeader:

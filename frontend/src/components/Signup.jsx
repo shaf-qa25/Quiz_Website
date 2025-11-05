@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { signupStyles } from '../assets/dummyStyles';
+import { signupStyles } from '../assets/themeStyles';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CheckCircle, Eye, EyeOff, Lock, Mail, User } from 'lucide-react';
 

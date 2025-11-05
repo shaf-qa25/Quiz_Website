@@ -1,15 +1,14 @@
-// QuizContent.jsx (New Component)
+
 
 import React, { useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import axios from "axios";
-import { sidebarStyles } from '../assets/dummyStyles'
-import questionsData from "../assets/dummydata";
+import { sidebarStyles } from '../assets/themeStyles'
+import questionsData from "../assets/questions";
 import { Award, BookOpen, CheckCircle, Code, Coffee, Cpu, Database, Globe, Layout, Menu, Sparkles, Star, Target, Terminal, Trophy, XCircle, Zap } from 'lucide-react';
 
 const API_BASE = "https://mindup-ni3d.onrender.com";
 
-// Helper functions (move these if they are used elsewhere)
 const getPerformanceStatus = (score) => {
     if (score.percentage >= 90)
         return {
@@ -36,7 +35,6 @@ const getPerformanceStatus = (score) => {
     };
 };
 
-// Simplified Tech/Level list for lookup (should be imported or passed)
 const technologies = [
     { id: "html", name: "HTML", icon: <Globe size={20} />, color: "bg-orange-50 text-orange-600 border-orange-200", }, 
     { id: "css", name: "CSS", icon: <Layout size={20} />, color: "bg-blue-50 text-blue-600 border-blue-200", },
@@ -72,8 +70,7 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
     const submitResult = useCallback(async () => {
         if (submittedRef.current) return;
         if (!selectedTech || !selectedLevel) return;
-        
-        // Find technology and level objects for payload info
+    
         const techObj = technologies.find(t => t.id === selectedTech);
         const levelObj = levels.find(l => l.id === selectedLevel);
         
@@ -117,7 +114,6 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
         }
     }, [showResults, submitResult]);
     
-    // Handler for answering the question
     const handleAnswerSelect = (answerIndex) => {
         const newAnswers = {
             ...userAnswers,
@@ -135,16 +131,13 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
     }
 
     const handleSeeResults = () => {
-        // Only show results if an answer was selected for the last question
         if (userAnswers[currentQuestion] !== undefined) {
             setShowResults(true);
         } else {
-            // Optional: Provide feedback if user tries to click before answering
             toast.info("Please select an answer first! 🧐");
         }
     }
 
-    // Look up current tech/level details for rendering
     const currentTech = selectedTech ? technologies.find(t => t.id === selectedTech) : null;
     const currentLevel = selectedLevel ? levels.find(l => l.id === selectedLevel) : null;
 
@@ -152,9 +145,7 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
     return (
         <main className={sidebarStyles.mainContent}>
             
-            {/* Mobile Header (Keep the hamburger button for mobile) */}
             <div className={sidebarStyles.mobileHeader}>
-                {/* Hamburger button to toggle the sidebar on mobile */}
                 {window.innerWidth < 768 && (
                     <button
                         onClick={toggleSidebar}
@@ -189,7 +180,6 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
                 </div>
             </div>
 
-            {/* Mobile Level Selection (If tech selected but level not selected) */}
             {currentTech && !currentLevel && (
                 <div className={sidebarStyles.mobileLevels}>
                     <div className={sidebarStyles.mobileLevelsContainer}>
@@ -206,9 +196,7 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
                 </div>
             )}
 
-            {/* Content Display based on State */}
             {!selectedTech ? (
-                // Welcome Screen
                 <div className={sidebarStyles.welcomeContainer}>
                     <div className={sidebarStyles.welcomeContent}>
                         <div className={sidebarStyles.welcomeIcon}>
@@ -222,7 +210,6 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
                             journey. Test your knowledge at basic, intermediate, or
                             advanced levels.
                         </p>
-                        {/* ... (Features Grid remains the same) ... */}
                          <div className={sidebarStyles.featuresGrid}>
                             <div className={sidebarStyles.featureCard}>
                             <div className={sidebarStyles.featureIcon}>
@@ -293,7 +280,6 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
                     </div>
                 </div>
             ) : showResults ? (
-                // Results Screen
                 <div className={sidebarStyles.resultsContainer}>
                     <div className={sidebarStyles.resultsContent}>
                         <div className={sidebarStyles.resultsHeader}>
@@ -314,7 +300,6 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
                                 {performance.text}
                             </div>
                             
-                            {/* ... (Score Grid and Progress Bar remain the same) ... */}
                             <div className={sidebarStyles.scoreGrid}>
                                 <div className={sidebarStyles.scoreCard}>
                                     <div className={sidebarStyles.scoreIcon}>
@@ -364,7 +349,6 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
                     </div>
                 </div>
             ) : currentQ ? (
-                // Quiz Question Screen
                 <div className={sidebarStyles.quizContainer}>
                     <div className={sidebarStyles.quizHeader}>
                         <div className={sidebarStyles.quizTitleContainer}>
@@ -389,7 +373,6 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
                         </div>
                     </div>
 
-                    {/* Question and Options */}
                     <div className={sidebarStyles.questionContainer}>
                         <div className={sidebarStyles.questionHeader}>
                             <div className={sidebarStyles.questionIcon}>
@@ -460,7 +443,6 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
                     </div>
                 </div>
             ) : (
-                // Loading Screen
                 <div className={sidebarStyles.loadingContainer}>
                     <div className={sidebarStyles.loadingContent}>
                         <div className={sidebarStyles.loadingSpinner} />

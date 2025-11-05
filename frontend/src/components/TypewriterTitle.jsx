@@ -1,8 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 const TARGET_TEXT = "The Code. The Challenge. The Mastery."
 const TYPING_SPEED = 80; 
-const CURSOR_BLINK_SPEED = 500; // 500ms for blinking
+const CURSOR_BLINK_SPEED = 500; 
 
 const TypewriterTitle = () => {
     const [displayedText, setDisplayedText] = useState("");
