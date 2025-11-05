@@ -1,9 +1,10 @@
 import React from "react";
-import { Navigate, Route, Routes, useLocation} from "react-router-dom";
+import { Navigate, Route, Router, Routes, useLocation} from "react-router-dom";
 import Home from "./pages/Home.jsx"
 import Login from "./components/Login.jsx"
 import Signup from "./components/Signup.jsx";
 import ResultPage from "./pages/resultPage.jsx";
+import PlayQuiz from "./pages/PlayQuiz.jsx";
 
 
 function RequireAuth({children}){
@@ -18,6 +19,7 @@ function RequireAuth({children}){
 }
 function App() {
   return (
+ 
     <Routes>
       <Route path = "/" element= {<Home/>}/>
       <Route path="/login" element= {<Login/>}/>
@@ -27,7 +29,9 @@ function App() {
           <ResultPage/>
         </RequireAuth>
       }/>
+      <Route path="/quiz" element={<PlayQuiz/>}/>
     </Routes>
+   
   );
 }
 

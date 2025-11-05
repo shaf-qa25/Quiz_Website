@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { navbarStyles } from "../assets/dummyStyles";
-import { Award, LogOut, LogIn, X, Menu, UserPlus } from 'lucide-react';
+import { Award, LogOut, LogIn, X, Menu, UserPlus, TargetIcon } from 'lucide-react';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -29,7 +29,6 @@ const Navbar = () => {
   const handleLogout = () => {
     try {
       localStorage.removeItem('authToken');
-      localStorage.clear();
     } catch (e) {
       console.error("Logout error", e);
     }
@@ -42,7 +41,15 @@ const Navbar = () => {
     } catch (e) {
       window.location.href = "/login";
     }
+
+    
   };
+  const getNavLinkClassName = (isActive, baseStyle) => {
+    return isActive 
+      ? `${baseStyle} ${navbarStyles.activeLinkStyle || 'font-bold text-indigo-600'}` // 'font-bold text-indigo-600' is a placeholder
+      : baseStyle;
+  };
+
   return (
     <nav className={navbarStyles.nav}>
       <div style={{ backgroundImage: navbarStyles.decorativePatternBackground }}
@@ -74,6 +81,11 @@ const Navbar = () => {
 
         <div className={navbarStyles.desktopButtonsContainer}>
           <div className={navbarStyles.spacer}></div>
+          <NavLink
+            to='/quiz'
+            className={({ isActive }) => getNavLinkClassName(isActive, navbarStyles.resultsButton)}
+          ><TargetIcon className={navbarStyles.buttonIcon}/>
+          Play Quiz</NavLink>
           <NavLink to='/result' className={navbarStyles.resultsButton}>
             <Award className={navbarStyles.buttonIcon} />
             My Result
@@ -81,7 +93,7 @@ const Navbar = () => {
 
           {loggedIn ? (
             <button
-              onClick={handleLogout} className={navbarStyles.logoButton}>
+              onClick={handleLogout} className={navbarStyles.loginButton}>
               <LogOut className={navbarStyles.buttonIcon} />
               Logout
             </button>
@@ -112,6 +124,17 @@ const Navbar = () => {
           {menuOpen && (
             <div className={navbarStyles.mobileMenuPanel}>
               <ul className={navbarStyles.mobileMenuList}>
+
+              <li>
+                  <NavLink
+                    to="/quiz"
+                    onClick={() => setMenuOpen(false)}
+                    className={({ isActive }) => getNavLinkClassName(isActive, navbarStyles.mobileMenuItem)}
+                  >
+                    <Menu className={navbarStyles.mobileMenuIcon} />
+                    Play Quiz
+                  </NavLink>
+                </li>
                 <li>
                   <NavLink to="/result" className={navbarStyles.mobileMenuItem} onClick={() => setMenuOpen(false)}>
                     <Award className={navbarStyles.mobileMenuIcon} />

@@ -49,6 +49,9 @@ export const navbarStyles = {
     "inline-flex cursor-pointer items-center gap-2 px-3 py-2 rounded-full bg-gradient-to-r from-[#CBA1FF] to-[#FF914D] text-white text-sm font-medium shadow-md transform transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CBA1FF]",
   buttonIcon: "h-4 w-4 flex-shrink-0",
 
+  activeLinkStyle: 
+    "bg-gradient-to-r from-[#e76e1a] to-[#d6c230]  shadow-xl ring-2 ring-offset-2 ring-[#FFD93D]",
+
   // Mobile menu
   mobileMenuContainer: "md:hidden flex items-center",
   menuToggleButton:
@@ -60,6 +63,9 @@ export const navbarStyles = {
   mobileMenuItem:
     "w-full text-left px-4 py-3 flex items-center gap-2 text-sm hover:bg-[#FFF9F0]",
   mobileMenuIcon: "h-4 w-4",
+
+  mobileActiveMenuItem: 
+    "font-bold text-[#FF914D] bg-[#FFF9F0] border-l-4 border-[#FF914D]",
 
   // Animations and utility styles
   animations: `
@@ -162,7 +168,7 @@ export const loginStyles = {
   // Animations and styles
   animations: `@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');:root{--card-radius:24px;}@keyframes gradient-anim{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}.animate-border{border-radius:var(--card-radius);padding:2px;background:linear-gradient(90deg,rgba(255,145,77,0.95),rgba(203,161,255,0.9),rgba(255,217,61,0.95));background-size:200% 200%;animation:gradient-anim 6s ease infinite}@keyframes float-slow{0%{transform:translateY(0px)}50%{transform:translateY(-18px)}100%{transform:translateY(0px)}}@keyframes float-slower{0%{transform:translateY(0px)}50%{transform:translateY(-10px)}100%{transform:translateY(0px)}}.animate-float-slow{animation:float-slow 8s ease-in-out infinite}.animate-float-slower{animation:float-slower 10s ease-in-out infinite}#login-heading,form,input,button,a,p,label,span{font-family:'Poppins',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial}@media(max-width:360px){.rounded-3xl{border-radius:14px}}@media(min-width:1024px){.rounded-3xl{border-radius:24px}}`,
 };
- 
+
 export const signupStyles = {
   // Page container
   pageContainer:
@@ -249,20 +255,20 @@ export const signupStyles = {
   }`
 };
 
-  
+
 export const sidebarStyles = {
   // Page container
   pageContainer: "min-h-screen bg-gradient-to-br from-[#FFF9F0] to-[#FFEAC2]",
 
-  // Mobile overlay
-  mobileOverlay: "fixed inset-0 bg-black/30 z-30 md:hidden",
+  // Mobile overlay (MODIFIED: Added md:hidden back)
+  mobileOverlay: "fixed inset-0 bg-black/30 z-30 **md:hidden**",
 
   // Main container
   mainContainer: "flex xl:h-screen xl:overflow-y-hidden",
 
-  // Sidebar styles
+  // Sidebar styles (MODIFIED: Added -translate-x-full to hide by default)
   sidebar:
-    "fixed h-screen z-40 top-0 left-0 w-80 transform transition-transform duration-300 ease-in-out bg-white shadow-lg rounded-r-2xl overflow-y-auto border-r border-[#FFD93D]/30 md:relative md:translate-x-0 md:flex md:flex-col",
+    "fixed h-auto z-40 top-0 left-0 w-80 transform transition-transform duration-300 ease-in-out bg-white shadow-lg rounded-r-2xl overflow-y-auto border-r border-[#FFD93D]/30 **-translate-x-full md:relative md:translate-x-0** md:flex md:flex-col",
 
   // Sidebar header
   sidebarHeader:
@@ -299,7 +305,7 @@ export const sidebarStyles = {
 
   // Levels container
   levelsContainer:
-    "mt-3 ml-2 p-3 bg-[#FFF9F0] rounded-xl border border-[#FFD93D]/30",
+    " ml-2  bg-[#FFF9F0] rounded-xl border border-[#FFD93D]/30",
   levelsTitle: "text-sm font-medium text-[#2C2C2C] mb-2 flex items-center",
   techBadge:
     "ml-2 text-xs bg-[#FFD93D]/40 text-[#2C2C2C] px-2 py-0.5 rounded-full",
@@ -321,11 +327,11 @@ export const sidebarStyles = {
   footerContentCenter: "text-center text-xs",
   footerHighlight: "mt-1 text-[#FF914D] font-medium",
 
-  // Main content
-  mainContent: "flex-1 min-h-screen p-4 md:p-8 ml-0 md:ml-0",
+  // Main content (MODIFIED: Added transition-all)
+  mainContent: "flex-1 min-h-screen p-4 md:p-8 ml-0 md:ml-0 **transition-all duration-300 ease-in-out**",
 
-  // Mobile header
-  mobileHeader: "flex items-center justify-between mb-4 md:hidden",
+  // Mobile header (MODIFIED: Added md:hidden back)
+  mobileHeader: "flex items-center justify-between mb-4 **md:hidden**",
   menuButton: "p-2 rounded-md bg-white shadow-sm",
   mobileTitle: "flex-1 mx-3",
   mobileTechInfo:
@@ -344,7 +350,7 @@ export const sidebarStyles = {
 
   // Welcome screen
   welcomeContainer:
-    "h-full xl:pt-75 font-[pacifico] lg:pb-90 flex items-center justify-center",
+    "h-200 xl:pt-75 font-[pacifico] lg:pb-90 flex items-center justify-center",
   welcomeContent:
     "text-center font-[pacifico] max-w-2xl mx-auto bg-white/90 backdrop-blur-sm p-6 md:p-10 rounded-2xl shadow-lg border border-white",
   welcomeIcon:
@@ -466,33 +472,32 @@ export const sidebarStyles = {
 
   // Custom styles
   customStyles: `
-    .sidebar-content {
-      -webkit-overflow-scrolling: touch;
+   .sidebar-content {
+   -webkit-overflow-scrolling: touch;
+   }
+  
+  aside .sidebar-content::-webkit-scrollbar {
+   width: 10px;
+   }
+   aside .sidebar-content::-webkit-scrollbar-track {
+    background: transparent;
+   }
+   aside .sidebar-content::-webkit-scrollbar-thumb {
+    background-color: rgba(255,145,77,0.2);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
     }
-
-    aside .sidebar-content::-webkit-scrollbar {
-      width: 10px;
-    }
-    aside .sidebar-content::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    aside .sidebar-content::-webkit-scrollbar-thumb {
-      background-color: rgba(255,145,77,0.2);
-      border-radius: 999px;
-      border: 2px solid transparent;
-      background-clip: padding-box;
-    }
-    aside .sidebar-content::-webkit-scrollbar-thumb:hover {
-      background-color: rgba(255,145,77,0.3);
-    }
-
-    aside .sidebar-content {
-      scrollbar-width: thin;
-      scrollbar-color: rgba(255,145,77,0.25) transparent;
-    }
-  `,
+   aside .sidebar-content::-webkit-scrollbar-thumb:hover {
+   background-color: rgba(255,145,77,0.3);
+   }
+  
+   aside .sidebar-content {
+   scrollbar-width: thin;
+   scrollbar-color: rgba(255,145,77,0.25) transparent;
+   }
+   `,
 };
-
 export const resultStyles = {
   // Page container
   pageContainer: "min-h-screen bg-[#FFF9F0] p-6",
