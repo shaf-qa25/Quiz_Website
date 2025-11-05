@@ -62,6 +62,7 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
     const score = calculateScore();
     const performance = getPerformanceStatus(score);
     const questions = getQuestions();
+    const isLastQuestion = currentQuestion === questions.length - 1;
 
     const getAuthHeader = () => {
         const token = localStorage.getItem('token') || localStorage.getItem('authToken') || null;
@@ -130,9 +131,19 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
             } else {
                 setShowResults(true);
             }
-        }, 500);
+        }, 1200);
     }
-    
+
+    const handleSeeResults = () => {
+        // Only show results if an answer was selected for the last question
+        if (userAnswers[currentQuestion] !== undefined) {
+            setShowResults(true);
+        } else {
+            // Optional: Provide feedback if user tries to click before answering
+            toast.info("Please select an answer first! 🧐");
+        }
+    }
+
     // Look up current tech/level details for rendering
     const currentTech = selectedTech ? technologies.find(t => t.id === selectedTech) : null;
     const currentLevel = selectedLevel ? levels.find(l => l.id === selectedLevel) : null;
@@ -204,7 +215,7 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
                             <Award size={64} className="text-indigo-700" />
                         </div>
                         <h2 className={sidebarStyles.welcomeTitle}>
-                            Welcome to **Tech Quiz Master**
+                            Welcome to MindUp
                         </h2>
                         <p className={sidebarStyles.welcomeDescription}>
                             Select a technology from the sidebar to start your quiz
@@ -434,6 +445,18 @@ const QuizContent = ({ isSidebarOpen, toggleSidebar, selectedTech, selectedLevel
                                 );
                             })}
                         </div>
+                        {userAnswers[currentQuestion] !== undefined && isLastQuestion && (
+                            <div className={sidebarStyles.quizFooter}>
+                                <button
+                                    onClick={handleSeeResults}
+                                    className="w-full mt-6 px-4 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 ease-in-out flex items-center justify-center disabled:opacity-50"
+                                    disabled={submittedRef.current} // Prevent multiple submissions
+                                >
+                                    <Trophy size={20} className="mr-2" />
+                                    See Your Result
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             ) : (

@@ -5,7 +5,7 @@ import MyResult from '../components/MyResult'
 const ResultPage = () => {
   return (
     <div>
-      <Navbar/>
+      
       <MyResult/>
     </div>
   )

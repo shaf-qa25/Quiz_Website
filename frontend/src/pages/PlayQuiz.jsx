@@ -54,7 +54,7 @@ const PlayQuiz = () => {
     // --- RENDERING ---
     return (
         <div className='flex flex-col'>
-        <Navbar/>
+       
         <div className={`flex flex-row grow ${sidebarStyles.pageContainer} flex min-h-screen`}> 
 
             {/* 1. Sidebar Component (Handles tech/level selection) */}

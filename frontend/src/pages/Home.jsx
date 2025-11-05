@@ -1,7 +1,4 @@
-// Home.jsx (This is the new scrollable landing page)
-
 import React from 'react';
-// Assuming sidebarStyles is accessible or imported here
 import { sidebarStyles } from '../assets/dummyStyles';
 import { Link } from 'react-router-dom';
 import { Target, Trophy, Layers, Code, Zap, Globe, Cpu, Coffee, ArrowRight } from 'lucide-react';
@@ -9,8 +6,6 @@ import Navbar from '../components/Navbar';
 import TypewriterTitle from '../components/TypewriterTitle';
 
 const Home = () => {
-    
-    // Custom wrapper to apply your main background and padding consistently
     const HomeSection = ({ children, className = "" }) => (
         <div className={`py-16 md:py-24 ${className}`}>
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,12 +15,9 @@ const Home = () => {
     );
 
     return (
-        // 1. Overall Page Container with Background
         <div className={sidebarStyles.pageContainer}>
             
-           <Navbar/>
-
-            {/* 3. HERO SECTION (Above the fold) */}
+           
             <HomeSection className="pt-20 md:pt-32 pb-16 md:pb-24">
                 <div className="text-center">
                     <div className={sidebarStyles.welcomeIcon}>
@@ -38,7 +30,6 @@ const Home = () => {
                         The ultimate platform to test, track, and significantly boost your knowledge in the world's most demanded technologies.
                     </p>
                     
-                    {/* Primary CTA */}
                     <Link 
                         to="/quiz"
                         className="inline-flex items-center px-10 py-4 text-xl font-bold rounded-xl shadow-2xl transition-all duration-300
@@ -51,7 +42,6 @@ const Home = () => {
                 </div>
             </HomeSection>
 
-            {/* 4. ABOUT/HOW IT WORKS SECTION */}
             <HomeSection className="bg-white/70 shadow-inner">
                 <h3 className="text-3xl md:text-4xl font-bold text-center text-[#2C2C2C] mb-12">
                     How It Works
@@ -71,32 +61,83 @@ const Home = () => {
                 </div>
             </HomeSection>
 
-            {/* 5. TECHNOLOGY SPOTLIGHT SECTION */}
-            <HomeSection>
-                <h3 className="text-3xl md:text-4xl font-bold text-center text-[#2C2C2C] mb-12">
-                    Technologies We Cover
-                </h3>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-                    {[
-                        { icon: Globe, name: "HTML/CSS" },
-                        { icon: Code, name: "JavaScript" },
-                        { icon: Cpu, name: "React" },
-                        { icon: Target, name: "Node.js" },
-                        { icon: Coffee, name: "Java" },
-                        { icon: Code, name: "Python" },
-                        { icon: Layers, name: "MongoDB" },
-                        { icon: Zap, name: "C++" },
-                        { icon: Trophy, name: "Bootstrap" },
-                        { icon: Target, name: "SQL" },
-                    ].map((tech, index) => (
-                        <div key={index} className="flex flex-col items-center p-4 rounded-xl border border-[#FFD93D]/50 bg-white/80 shadow-sm">
-                            <tech.icon size={30} className="text-[#FF914D] mb-2" />
-                            <span className="text-sm font-medium text-[#2C2C2C]">{tech.name}</span>
-                        </div>
-                    ))}
-                </div>
-            </HomeSection>
+{/* 5. TECHNOLOGY SPOTLIGHT SECTION */}
+<HomeSection>
+  <h3 className="text-3xl md:text-4xl font-bold text-center text-[#2C2C2C] mb-12">
+    Technologies We Cover
+  </h3>
 
+  {(() => {
+    const [selectedTech, setSelectedTech] = React.useState(null);
+
+    const techLinks = {
+      "HTML/CSS": "https://www.w3schools.com/html/",
+      JavaScript: "https://www.w3schools.com/js/",
+      React: "https://www.w3schools.com/react/",
+      "Node.js": "https://www.w3schools.com/nodejs/",
+      Java: "https://www.w3schools.com/java/",
+      Python: "https://www.w3schools.com/python/",
+      MongoDB: "https://www.w3schools.com/mongodb/",
+      "C++": "https://www.w3schools.com/cpp/",
+      Bootstrap: "https://www.w3schools.com/bootstrap5/",
+      SQL: "https://www.w3schools.com/sql/",
+    };
+
+    const icons = [Globe, Code, Cpu, Target, Coffee, Layers, Zap, Trophy];
+
+    return (
+      <>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
+          {Object.entries(techLinks).map(([name, url], index) => {
+            const Icon = icons[index % icons.length];
+            return (
+              <div
+                key={name}
+                onClick={() => setSelectedTech({ name, url })}
+                className="flex flex-col items-center p-4 rounded-xl border border-[#FFD93D]/50 bg-white/80 shadow-sm 
+                           hover:shadow-lg hover:scale-[1.05] cursor-pointer transition-transform"
+              >
+                <Icon size={30} className="text-[#FF914D] mb-2" />
+                <span className="text-sm font-medium text-[#2C2C2C]">{name}</span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Modal */}
+        {selectedTech && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-white rounded-2xl shadow-2xl w-[90%] md:w-[80%] lg:w-[60%] h-[60vh] p-6 relative">
+              <button
+                onClick={() => setSelectedTech(null)}
+                className="absolute top-3 right-4 text-gray-600 hover:text-[#FF914D] text-xl font-bold"
+              >
+                ✕
+              </button>
+
+              <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
+                <h4 className="text-2xl font-semibold text-[#2C2C2C]">
+                  {selectedTech.name}
+                </h4>
+                <p className="text-gray-600">
+                  Learn {selectedTech.name} in detail on W3Schools.
+                </p>
+                <a
+                  href={selectedTech.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#FF914D] hover:bg-[#ff7a1f] text-white px-6 py-2 rounded-lg transition-all shadow-md"
+                >
+                  Go to Learning Page ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  })()}
+</HomeSection>
             {/* 6. FINAL CTA (Footer-like) */}
             <div className={`text-center py-12 ${sidebarStyles.sidebarHeader}`}>
                 <h3 className="text-2xl font-bold text-[#2C2C2C] mb-4">

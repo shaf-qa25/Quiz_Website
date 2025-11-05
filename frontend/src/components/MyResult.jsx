@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { resultStyles } from '../assets/dummyStyles'
+
 import axios from "axios";
 import { toast } from "react-toastify";
+
 
 
 
@@ -145,8 +147,10 @@ const MyResult = ({ apiBase = "https://mindup-ni3d.onrender.com" }) => {
 
   return (
     <div className={resultStyles.pageContainer}>
+      
       <div className={resultStyles.container}>
         <header className={resultStyles.header}>
+
           <div>
             <h1 className={resultStyles.title}>Quiz Results</h1>
           </div>
@@ -164,8 +168,8 @@ const MyResult = ({ apiBase = "https://mindup-ni3d.onrender.com" }) => {
                   key={tech}
                   onClick={() => handleSelectTech(tech)}
                   className={`${resultStyles.filterButton} ${selectedTechnology === tech
-                      ? resultStyles.filterButtonActive
-                      : resultStyles.filterButtonInactive
+                    ? resultStyles.filterButtonActive
+                    : resultStyles.filterButtonInactive
                     }`}
                 >
                   {tech}
@@ -181,8 +185,8 @@ const MyResult = ({ apiBase = "https://mindup-ni3d.onrender.com" }) => {
                     key={`fallback-${tech}`}
                     onClick={() => handleSelectTech(tech)}
                     className={`${resultStyles.filterButton} ${selectedTechnology === tech
-                        ? resultStyles.filterButtonActive
-                        : resultStyles.filterButtonInactive
+                      ? resultStyles.filterButtonActive
+                      : resultStyles.filterButtonInactive
                       }`}
                     aria-pressed={selectedTechnology === tech}
                   >
@@ -193,38 +197,38 @@ const MyResult = ({ apiBase = "https://mindup-ni3d.onrender.com" }) => {
 
             <div className={resultStyles.filterStatus}>
               {selectedTechnology === 'all' ?
-              'Showing all technologies': `Filtering: ${selectedTechnology}`}
+                'Showing all technologies' : `Filtering: ${selectedTechnology}`}
             </div>
           </div>
         </div>
 
         {loading ? (
           <div className={resultStyles.loadingContainer}>
-            <div className={resultStyles.loadingSpinner}/>
+            <div className={resultStyles.loadingSpinner} />
             <div className={resultStyles.loadingText}>
               Loading results...
             </div>
           </div>
-        ):(
+        ) : (
           <>
-          
-          {Object.entries(grouped).map(([track, items]) =>(
-            <section key={track} className={resultStyles.trackSection}>
-              <h2 className={resultStyles.trackTitle}>{track} Track</h2>
 
-              <div className={resultStyles.resultsGrid}>
-                {items.map((r)=>(
-                  <StripCard key={makeKey(r)} item={r}/>
-                ))}
+            {Object.entries(grouped).map(([track, items]) => (
+              <section key={track} className={resultStyles.trackSection}>
+                <h2 className={resultStyles.trackTitle}>{track} Track</h2>
+
+                <div className={resultStyles.resultsGrid}>
+                  {items.map((r) => (
+                    <StripCard key={makeKey(r)} item={r} />
+                  ))}
+                </div>
+              </section>
+            ))}
+
+            {Array.isArray(results) && results.length === 0 && !error && (
+              <div className={resultStyles.emptyState}>
+                No results yet.Take a quiz to see results here
               </div>
-            </section>
-          ))}
-
-          {Array.isArray(results) && results.length === 0 && !error &&(
-            <div className={resultStyles.emptyState}>
-              No results yet.Take a quiz to see results here
-            </div>
-          )}
+            )}
           </>
         )}
       </div>
@@ -249,55 +253,55 @@ function StripCard({ item }) {
 
   const level = getLevel(item);
 
-return(
-  <article className={resultStyles.card}>
-    <div className={resultStyles.cardAccent}></div>
+  return (
+    <article className={resultStyles.card}>
+      <div className={resultStyles.cardAccent}></div>
 
-    <div className={resultStyles.cardContent}>
-      <div className={resultStyles.cardHeader}>
-        <div className={resultStyles.cardInfo}>
-          <div className={`${resultStyles.levelAvatar} ${level.style}`}>
-            {level.letter}
+      <div className={resultStyles.cardContent}>
+        <div className={resultStyles.cardHeader}>
+          <div className={resultStyles.cardInfo}>
+            <div className={`${resultStyles.levelAvatar} ${level.style}`}>
+              {level.letter}
+            </div>
+
+            <div className={resultStyles.cardText}>
+              <h3 className={resultStyles.cardTitle}>{item.title}</h3>
+
+              <div className={resultStyles.cardMeta}>
+                {item.totalQuestions} Qs
+                {item.timeSpent ? ` • ${item.timeSpent}` : ""}
+              </div>
+            </div>
           </div>
 
-          <div className={resultStyles.cardText}>
-            <h3 className={resultStyles.cardTitle}>{item.title}</h3>
-
-            <div className={resultStyles.cardMeta}>
-              {item.totalQuestions} Qs
-              {item.timeSpent ? ` • ${item.timeSpent}` : ""}
+          <div className={resultStyles.cardPerformance}>
+            <div className={resultStyles.performanceLabel}>Performance</div>
+            <div className={resultStyles.badgeContainer}>
+              <Badge percent={percent} />
             </div>
           </div>
         </div>
 
-        <div className={resultStyles.cardPerformance}>
-          <div className={resultStyles.performanceLabel}>Performance</div>
-          <div className={resultStyles.badgeContainer}>
-            <Badge percent = {percent}/>
+        <div className={resultStyles.cardStats}>
+          <div className={resultStyles.statItem}>
+            Correct:
+            <span className={resultStyles.statNumber}>{item.correct}</span>
+          </div>
+
+          <div className={resultStyles.statItem}>
+            Wrong:
+            <span className={resultStyles.statNumber}>{item.wrong}</span>
+          </div>
+
+          <div className={resultStyles.statItem}>
+            Score:
+            <span className={resultStyles.statNumber}>{percent}%</span>
           </div>
         </div>
       </div>
+    </article>
+  )
 
-      <div className={resultStyles.cardStats}>
-        <div className={resultStyles.statItem}>
-          Correct:
-          <span className={resultStyles.statNumber}>{item.correct}</span>
-        </div>
-
-        <div className={resultStyles.statItem}>
-          Wrong:
-          <span className={resultStyles.statNumber}>{item.wrong}</span>
-        </div>
-
-        <div className={resultStyles.statItem}>
-          Score:
-          <span className={resultStyles.statNumber}>{percent}%</span>
-        </div>
-      </div>
-    </div>
-  </article>
-)
-  
 }
 
 export default MyResult

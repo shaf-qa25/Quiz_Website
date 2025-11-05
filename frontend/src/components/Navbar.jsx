@@ -74,10 +74,16 @@ const Navbar = () => {
         </div>
 
         <div className={navbarStyles.titleContainer}>
-          <div className={navbarStyles.titleBackground}>
-            <h1 className={navbarStyles.titleText}>MindUp</h1>
-          </div>
-        </div>
+  <Link 
+    to="/" 
+    className="block" 
+  >
+    <div className={navbarStyles.titleBackground}>
+      <h1 className={navbarStyles.titleText}>MindUp</h1>
+    </div>
+  </Link>
+</div>
+
 
         <div className={navbarStyles.desktopButtonsContainer}>
           <div className={navbarStyles.spacer}></div>

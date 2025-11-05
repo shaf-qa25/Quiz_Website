@@ -6,6 +6,7 @@ import Signup from "./components/Signup.jsx";
 import ResultPage from "./pages/resultPage.jsx";
 import PlayQuiz from "./pages/PlayQuiz.jsx";
 import Footer from "./pages/footer.jsx";
+import Navbar from "./components/Navbar.jsx";
 
 
 function RequireAuth({children}){
@@ -21,8 +22,10 @@ function RequireAuth({children}){
 function App() {
   return (
  <>
+ <Navbar/>
     <Routes>
       <Route path = "/" element= {<Home/>}/>
+      {/* <Route path="/learn/:techName" element={<LearningPage />} /> */}
       <Route path="/login" element= {<Login/>}/>
       <Route path="/signup" element= {<Signup/>}/>
       <Route path="/result" element={

@@ -19,17 +19,17 @@ export const navbarStyles = {
   container: "max-w-6xl mx-auto flex items-center justify-between relative z-10",
 
   // Logo section
-  logoContainer: "flex items-center flex-shrink-0",
+  logoContainer: "flex items-center flex-shrink-0 gap-3 ",
   logoButton:
     "inline-flex items-center p-0 bg-transparent rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#CBA1FF] transform transition-transform duration-200",
   logoLink:
-    "relative bg-gradient-to-br from-[#FF914D] to-[#CBA1FF] p-0.5 rounded-full",
+    "relative bg-gradient-to-br from-[#FF914D] to-[#CBA1FF] p-0.5 rounded-full flex-shrink-0",
   logoInner: "bg-gradient-to-b from-[#FF914D] to-[#CBA1FF] p-1 rounded-full",
   logoImage:
     "h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover border-2 border-[#CBA1FF]",
 
   // Title section
-  titleContainer: "flex-1 flex justify-center px-3",
+  titleContainer: "flex items-center gap-3 cursor-pointer",
   titleBackground:
     "bg-gradient-to-r from-[#FF914D]/25 via-[#CBA1FF]/25 to-[#FF914D]/25 xl:ml-40 backdrop-blur-sm px-4 py-2 sm:px-6 sm:py-3 rounded-full border border-[#FFFFFF]/10 shadow-md max-w-full",
   titleText:
